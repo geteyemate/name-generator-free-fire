@@ -1,3 +1,8 @@
+/* Prevent double-tap zoom on buttons and interactive elements */
+button, input {
+  touch-action: manipulation;
+}
+
 /* Body-wide subtle refinements */
 body {
   background-color: #fafafa; /* Very light grey, almost white */
