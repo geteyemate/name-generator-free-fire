@@ -18,45 +18,46 @@ function renderBatch(isNewSearch = false) {
     }
     currentPool = generateAllPool(baseName);
     currentIndex = 0;
-    resultsSection.innerHTML = '';
+    resultsSection.innerHTML = ''; // Nayi search par clear karo
     resultsSection.classList.remove('hidden');
+  } else {
+    // Agar user "Generate New Styles" dabaye, toh purane wale hata kar agle 10 dikhao
+    resultsSection.innerHTML = ''; 
+  }
+
+  // Agar pool khatam ho jaye toh wapas shuru se le lo taaki infinite loop chale
+  if (currentIndex >= currentPool.length) {
+    currentIndex = 0;
   }
 
   const nextBatch = currentPool.slice(currentIndex, currentIndex + BATCH_SIZE);
-  if (nextBatch.length === 0) {
-    loadMoreBtn.classList.add('hidden');
-    return;
-  }
 
   nextBatch.forEach(name => {
     const card = document.createElement('div');
-    card.className = 'flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-400 transition';
+    card.className = 'result-card'; // CSS class use ki hai jo tune di thi
     card.innerHTML = `
-      <span class="text-base font-bold tracking-wide text-gray-900 select-all">${name}</span>
-      <button class="bg-gray-100 hover:bg-gray-950 hover:text-white text-gray-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition active:scale-95" onclick="copyName('${name.replace(/'/g, "\\'")}', this)">Copy</button>
+      <span class="name-text select-all">${name}</span>
+      <button class="copy-btn" onclick="copyName('${name.replace(/'/g, "\\'")}', this)">Copy</button>
     `;
     resultsSection.appendChild(card);
   });
 
   currentIndex += BATCH_SIZE;
 
-  // Agar aur names bache hain toh Load More button dikhao, nahi toh chhipa do
-  if (currentIndex < currentPool.length) {
-    loadMoreBtn.classList.remove('hidden');
-  } else {
-    loadMoreBtn.classList.add('hidden');
-  }
+  // Button hamesha visible rahega taaki user jab chahe naye 10 names generate kar sake
+  loadMoreBtn.innerText = "Generate New Styles ⚡";
+  loadMoreBtn.classList.remove('hidden');
 }
 
 window.copyName = function(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     const originalText = btn.innerText;
     btn.innerText = 'Copied! ✅';
-    btn.classList.add('bg-emerald-500', 'text-white');
+    btn.classList.add('copied');
     
     setTimeout(() => {
       btn.innerText = originalText;
-      btn.classList.remove('bg-emerald-500', 'text-white');
+      btn.classList.remove('copied');
     }, 1500);
   });
 };
