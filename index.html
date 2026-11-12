@@ -3,43 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FF Name Style - Minimal Name Generator</title>
+  <title>FF Name Style - Dark Mode Generator</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-white text-gray-950 min-h-screen flex flex-col justify-between items-center p-4 font-['Plus_Jakarta_Sans']">
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex flex-col justify-between items-center p-4 font-['Plus_Jakarta_Sans']">
 
   <header class="w-full max-w-lg text-center py-6 sm:py-8">
-    <div class="inline-flex items-center space-x-2 bg-gray-950 text-white text-[11px] font-bold tracking-widest px-3 py-1.5 rounded-full uppercase mb-3.5 shadow-sm">
-      <span>100% Free • 10 Names Per Page</span>
+    <div class="inline-flex items-center space-x-2 bg-gray-900 border border-gray-800 text-gray-300 text-[11px] font-bold tracking-widest px-3.5 py-1.5 rounded-full uppercase mb-3.5 shadow-sm">
+      <span>⚡ Dark Mode • 10 Names Per Page</span>
     </div>
-    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tighter text-gray-950">FF Name Style</h1>
-    <p class="text-sm text-gray-500 font-medium mt-1.5">Enter your name, copy, and rule the battlefield.</p>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tighter text-white">FF Name Style</h1>
+    <p class="text-sm text-gray-400 font-medium mt-1.5">Enter your name, copy, and rule the battlefield.</p>
   </header>
 
-  <main class="w-full max-w-lg bg-white rounded-3xl p-6 sm:p-7 shadow-xl shadow-gray-100/70 border border-gray-100 space-y-6">
+  <main class="w-full max-w-lg bg-[#111827] rounded-3xl p-6 sm:p-7 shadow-2xl border border-gray-800/80 space-y-6">
     <div>
-      <label for="name-input" class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2.5">Your Nickname</label>
-      <input type="text" id="name-input" placeholder="e.g. Vinjex or Killer" class="w-full bg-gray-50 border border-gray-200 text-gray-950 placeholder-gray-400 rounded-xl px-5 py-3.5 text-base focus:outline-none focus:border-gray-950 focus:bg-white transition">
+      <label for="name-input" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2.5">Your Nickname</label>
+      <input type="text" id="name-input" placeholder="e.g. Vinjex or Killer" class="w-full bg-[#1f2937] border border-gray-700 text-white placeholder-gray-500 rounded-xl px-5 py-3.5 text-base focus:outline-none focus:border-white focus:bg-[#111827] transition">
     </div>
     
-    <button id="generate-btn" class="w-full bg-gray-950 hover:bg-gray-800 text-white font-semibold py-3.5 px-6 rounded-xl transition active:scale-95 shadow-lg shadow-gray-950/10">
+    <button id="generate-btn" class="w-full bg-white hover:bg-gray-200 text-gray-950 font-bold py-3.5 px-6 rounded-xl transition active:scale-95 shadow-lg shadow-white/5">
       Generate Stylish Names 🔥
     </button>
 
-    <section id="results-section" class="hidden pt-6 border-t border-gray-100 space-y-3">
+    <section id="results-section" class="hidden pt-6 border-t border-gray-800 space-y-3">
     </section>
 
-    <button id="load-more-btn" class="hidden w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl text-xs transition">
-      Load More Unique Styles ⚡
+    <button id="load-more-btn" class="hidden w-full bg-[#1f2937] hover:bg-gray-700 text-gray-200 font-semibold py-3 rounded-xl text-xs transition border border-gray-700">
+      Generate New Styles ⚡
     </button>
   </main>
 
   <footer class="w-full max-w-lg text-center py-6">
-    <p class="text-xs text-gray-400 font-medium">Built with AI • All Unicode Characters Supported</p>
+    <p class="text-xs text-gray-500 font-medium">Built with AI • All Unicode Characters Supported</p>
   </footer>
 
   <script src="app.js" type="module"></script>
