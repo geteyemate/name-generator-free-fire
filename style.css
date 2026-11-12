@@ -1,5 +1,5 @@
-/* Prevent double-tap zoom on buttons and interactive elements */
-button, input {
+/* Prevent double-tap zoom across the entire page */
+* {
   touch-action: manipulation;
 }
 
