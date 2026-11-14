@@ -1,19 +1,6 @@
 import { generateAllPool, transformText, INVISIBLE_SPACE, quickSymbols, leftSymbols, rightSymbols } from './nameGenerator.js';
 
-const toolTabs = document.querySelectorAll('.tool-tab');
-const toolPanels = document.querySelectorAll('.tool-panel');
-
-toolTabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    toolTabs.forEach(t => t.classList.remove('active'));
-    toolPanels.forEach(p => p.classList.add('hidden'));
-
-    tab.classList.add('active');
-    const targetId = tab.getAttribute('data-target');
-    document.getElementById(targetId).classList.remove('hidden');
-  });
-});
-
+// --- 1. AI NAME GENERATOR (10 PER BATCH) ---
 const nameInput = document.getElementById('name-input');
 const quickSpaceBtn = document.getElementById('quick-space-btn');
 const generateBtn = document.getElementById('generate-btn');
@@ -72,6 +59,8 @@ generateBtn.addEventListener('click', () => renderBatch(true));
 nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') renderBatch(true); });
 refreshBtn.addEventListener('click', () => renderBatch(false));
 
+
+// --- 2. CUSTOM BUILDER ---
 const builderName = document.getElementById('builder-name');
 const builderOutput = document.getElementById('builder-output');
 const builderCopyBtn = document.getElementById('builder-copy-btn');
@@ -123,6 +112,8 @@ rightSymbols.slice(0, 15).forEach(sym => {
 builderName.addEventListener('input', updateBuilderOutput);
 builderCopyBtn.addEventListener('click', () => copyWithFeedback(builderOutput.textContent, builderCopyBtn));
 
+
+// --- 3. BIO & SPACE TOOL ---
 const copyInvisibleBtn = document.getElementById('copy-invisible-btn');
 const bioInput = document.getElementById('bio-input');
 const bioOutput = document.getElementById('bio-output');
@@ -149,6 +140,8 @@ colorChips.forEach(chip => {
 bioInput.addEventListener('input', updateBioPreview);
 copyBioBtn.addEventListener('click', () => copyWithFeedback(bioOutput.textContent, copyBioBtn));
 
+
+// --- 4. SYMBOL VAULT ---
 const symbolGrid = document.getElementById('symbol-grid');
 const symbolToast = document.getElementById('symbol-toast');
 
