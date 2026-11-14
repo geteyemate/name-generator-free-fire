@@ -1,6 +1,5 @@
 import { generateAllPool, transformText, INVISIBLE_SPACE, quickSymbols, leftSymbols, rightSymbols } from './nameGenerator.js';
 
-// --- 1. TOOLBAR TABS ---
 const toolTabs = document.querySelectorAll('.tool-tab');
 const toolPanels = document.querySelectorAll('.tool-panel');
 
@@ -15,7 +14,6 @@ toolTabs.forEach(tab => {
   });
 });
 
-// --- 2. AI NAME GENERATOR (10 PER BATCH) ---
 const nameInput = document.getElementById('name-input');
 const quickSpaceBtn = document.getElementById('quick-space-btn');
 const generateBtn = document.getElementById('generate-btn');
@@ -74,8 +72,6 @@ generateBtn.addEventListener('click', () => renderBatch(true));
 nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') renderBatch(true); });
 refreshBtn.addEventListener('click', () => renderBatch(false));
 
-
-// --- 3. CUSTOM BUILDER (FULL POWER EDITOR) ---
 const builderName = document.getElementById('builder-name');
 const builderOutput = document.getElementById('builder-output');
 const builderCopyBtn = document.getElementById('builder-copy-btn');
@@ -102,7 +98,6 @@ fontChips.forEach(chip => {
   });
 });
 
-// Populate Left Symbols for Builder
 leftSymbols.slice(0, 15).forEach(sym => {
   const pill = document.createElement('button');
   pill.className = 'symbol-pill';
@@ -114,7 +109,6 @@ leftSymbols.slice(0, 15).forEach(sym => {
   builderLeftContainer.appendChild(pill);
 });
 
-// Populate Right Symbols for Builder
 rightSymbols.slice(0, 15).forEach(sym => {
   const pill = document.createElement('button');
   pill.className = 'symbol-pill';
@@ -127,12 +121,8 @@ rightSymbols.slice(0, 15).forEach(sym => {
 });
 
 builderName.addEventListener('input', updateBuilderOutput);
-builderCopyBtn.addEventListener('click', () => {
-  copyWithFeedback(builderOutput.textContent, builderCopyBtn);
-});
+builderCopyBtn.addEventListener('click', () => copyWithFeedback(builderOutput.textContent, builderCopyBtn));
 
-
-// --- 4. BIO & SPACE TOOL ---
 const copyInvisibleBtn = document.getElementById('copy-invisible-btn');
 const bioInput = document.getElementById('bio-input');
 const bioOutput = document.getElementById('bio-output');
@@ -159,8 +149,6 @@ colorChips.forEach(chip => {
 bioInput.addEventListener('input', updateBioPreview);
 copyBioBtn.addEventListener('click', () => copyWithFeedback(bioOutput.textContent, copyBioBtn));
 
-
-// --- 5. SYMBOL VAULT ---
 const symbolGrid = document.getElementById('symbol-grid');
 const symbolToast = document.getElementById('symbol-toast');
 
@@ -177,7 +165,6 @@ quickSymbols.forEach(sym => {
   symbolGrid.appendChild(tile);
 });
 
-// --- HELPER ---
 function copyWithFeedback(text, btn, successLabel = 'Copied') {
   navigator.clipboard.writeText(text).then(() => {
     const original = btn.textContent;
