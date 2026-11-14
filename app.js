@@ -1,6 +1,6 @@
-import { generateAllPool, INVISIBLE_SPACE, quickSymbols } from './nameGenerator.js';
+import { generateAllPool, transformText, INVISIBLE_SPACE, quickSymbols, leftSymbols, rightSymbols } from './nameGenerator.js';
 
-// --- 1. TOOLBAR NAVIGATION ---
+// --- 1. TOOLBAR TABS ---
 const toolTabs = document.querySelectorAll('.tool-tab');
 const toolPanels = document.querySelectorAll('.tool-panel');
 
@@ -15,7 +15,7 @@ toolTabs.forEach(tab => {
   });
 });
 
-// --- 2. NAME GENERATOR (10 PER BATCH, REPLACE ON REFRESH) ---
+// --- 2. AI NAME GENERATOR (10 PER BATCH) ---
 const nameInput = document.getElementById('name-input');
 const quickSpaceBtn = document.getElementById('quick-space-btn');
 const generateBtn = document.getElementById('generate-btn');
@@ -44,10 +44,7 @@ function renderBatch(isNewSearch = false) {
   }
 
   resultsSection.innerHTML = '';
-
-  if (currentIndex >= currentPool.length) {
-    currentIndex = 0;
-  }
+  if (currentIndex >= currentPool.length) currentIndex = 0;
 
   const nextBatch = currentPool.slice(currentIndex, currentIndex + BATCH_SIZE);
 
@@ -74,26 +71,79 @@ function renderBatch(isNewSearch = false) {
 }
 
 generateBtn.addEventListener('click', () => renderBatch(true));
-nameInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') renderBatch(true);
-});
+nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') renderBatch(true); });
 refreshBtn.addEventListener('click', () => renderBatch(false));
 
-// --- 3. BIO & INVISIBLE SPACE TOOL ---
+
+// --- 3. CUSTOM BUILDER (FULL POWER EDITOR) ---
+const builderName = document.getElementById('builder-name');
+const builderOutput = document.getElementById('builder-output');
+const builderCopyBtn = document.getElementById('builder-copy-btn');
+const fontChips = document.querySelectorAll('.font-chip');
+const builderLeftContainer = document.getElementById('builder-left-symbols');
+const builderRightContainer = document.getElementById('builder-right-symbols');
+
+let selectedFont = 'normal';
+let selectedLeft = '꧁༺';
+let selectedRight = '༻꧂';
+
+function updateBuilderOutput() {
+  const raw = builderName.value.trim() || 'Vinjex';
+  const styled = transformText(raw, selectedFont);
+  builderOutput.textContent = `${selectedLeft} ${styled} ${selectedRight}`;
+}
+
+fontChips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    fontChips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    selectedFont = chip.getAttribute('data-font');
+    updateBuilderOutput();
+  });
+});
+
+// Populate Left Symbols for Builder
+leftSymbols.slice(0, 15).forEach(sym => {
+  const pill = document.createElement('button');
+  pill.className = 'symbol-pill';
+  pill.textContent = sym;
+  pill.addEventListener('click', () => {
+    selectedLeft = sym;
+    updateBuilderOutput();
+  });
+  builderLeftContainer.appendChild(pill);
+});
+
+// Populate Right Symbols for Builder
+rightSymbols.slice(0, 15).forEach(sym => {
+  const pill = document.createElement('button');
+  pill.className = 'symbol-pill';
+  pill.textContent = sym;
+  pill.addEventListener('click', () => {
+    selectedRight = sym;
+    updateBuilderOutput();
+  });
+  builderRightContainer.appendChild(pill);
+});
+
+builderName.addEventListener('input', updateBuilderOutput);
+builderCopyBtn.addEventListener('click', () => {
+  copyWithFeedback(builderOutput.textContent, builderCopyBtn);
+});
+
+
+// --- 4. BIO & SPACE TOOL ---
 const copyInvisibleBtn = document.getElementById('copy-invisible-btn');
 const bioInput = document.getElementById('bio-input');
 const bioOutput = document.getElementById('bio-output');
 const copyBioBtn = document.getElementById('copy-bio-btn');
 const colorChips = document.querySelectorAll('.color-chip');
-
 let selectedColorCode = '[FF0000]';
 
-copyInvisibleBtn.addEventListener('click', () => {
-  copyWithFeedback(INVISIBLE_SPACE, copyInvisibleBtn, 'Copied!');
-});
+copyInvisibleBtn.addEventListener('click', () => copyWithFeedback(INVISIBLE_SPACE, copyInvisibleBtn, 'Copied!'));
 
 function updateBioPreview() {
-  const text = bioInput.value.trim() || 'Headshot King • India';
+  const text = bioInput.value.trim() || '⚡ HEADSHOT KING • INDIA ⚡';
   bioOutput.textContent = `${selectedColorCode} ${text}`;
 }
 
@@ -107,11 +157,10 @@ colorChips.forEach(chip => {
 });
 
 bioInput.addEventListener('input', updateBioPreview);
-copyBioBtn.addEventListener('click', () => {
-  copyWithFeedback(bioOutput.textContent, copyBioBtn);
-});
+copyBioBtn.addEventListener('click', () => copyWithFeedback(bioOutput.textContent, copyBioBtn));
 
-// --- 4. QUICK SYMBOL BOARD ---
+
+// --- 5. SYMBOL VAULT ---
 const symbolGrid = document.getElementById('symbol-grid');
 const symbolToast = document.getElementById('symbol-toast');
 
@@ -122,15 +171,13 @@ quickSymbols.forEach(sym => {
   tile.addEventListener('click', () => {
     navigator.clipboard.writeText(sym).then(() => {
       symbolToast.style.opacity = '1';
-      setTimeout(() => {
-        symbolToast.style.opacity = '0';
-      }, 1200);
+      setTimeout(() => { symbolToast.style.opacity = '0'; }, 1200);
     });
   });
   symbolGrid.appendChild(tile);
 });
 
-// --- SHARED COPY HELPER ---
+// --- HELPER ---
 function copyWithFeedback(text, btn, successLabel = 'Copied') {
   navigator.clipboard.writeText(text).then(() => {
     const original = btn.textContent;
