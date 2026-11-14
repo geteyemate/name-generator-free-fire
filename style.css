@@ -12,7 +12,7 @@ body {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Flowing Branch Neon Light Trails (Upar se niche tak wavy lines) */
+/* Flowing Branch Neon Light Trails Background */
 .neon-trail-container {
   position: fixed;
   top: 0;
@@ -32,25 +32,29 @@ body {
   filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.4));
 }
 
-/* Toolbar */
+/* Sticky Toolbar Nav */
 .studio-toolbar {
-  background: rgba(12, 12, 18, 0.9);
+  background: rgba(12, 12, 18, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
-  position: relative;
-  z-index: 2;
 }
 
-.tool-tab {
-  color: #71717a;
+.nav-pill {
+  flex: 1;
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #a1a1aa;
   background: transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
-.tool-tab:hover { color: #e4e4e7; }
-.tool-tab.active {
-  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+
+.nav-pill:hover {
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 /* Glass Card */
