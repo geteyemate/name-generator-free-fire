@@ -1,51 +1,67 @@
+export const INVISIBLE_SPACE = '\u3164'; // Official Hangul Filler blank space for FF
+
+export const quickSymbols = [
+  '꧁', '꧂', '亗', 'Ⓥ', '༒︎', '★',
+  '⚡', '♛', '♚', '鄉', 'ツ', 'メ',
+  '『', '』', '【', '】', '╰‿╯', '✿',
+  '☠︎', '⚔︎', '✞', '❖', '✦', '☬',
+  '๖ۣۜ', '爪', '༾', '༿', 'ᵀᴹ', 'ᵍᵒᵈ'
+];
+
 const leftSymbols = [
-  '꧁༺', '亗', '⚡', '★', '༒︎', '🔥', '╰‿╯', 'Ⓥ', '♛', '鄉', 
-  '『', '【', ' ᶦ﹜', '𝕯𝖔𝖒', '༺', ' ༒ ', '♞', 'M', 'メ', ' _ ॣ', 
-  '爪', '』', '༾', '๖ۣۜ', '๖ۣۜG', ' devil ༒', ' ⊗ ', ' ℳ ', ' 𝓡 '
+  '꧁༺', '亗', '⚡', '★', '༒︎', '╰‿╯', 'Ⓥ', '♛', '鄉',
+  '『', '【', 'ᶦ﹜', '༺', '༒', '♞', 'メ', '爪', '༾',
+  '๖ۣۜ', '☠︎', '⚔︎', '❖', '✦', '☬'
 ];
 
 const rightSymbols = [
-  '༻꧂', '亗', '⚡', '★', '༒︎', '🔥', '╰‿╯', 'ᵀᴹ', '♛', '鄉', 
-  '』', '】', 'ᵍᵒᵈ', '𝕬𝖗𝖙', '༻', ' ༒ ', '♚', ' 乡', 'ツ', ' ॣ_', 
-  ' 爪', '『', '༿', '₣', ' ঔ', ' ༒ 𝑲𝒊𝒍𝒍', ' ⊗ ', ' ℳ ', ' 𝓡 '
+  '༻꧂', '亗', '⚡', '★', '༒︎', '╰‿╯', 'ᵀᴹ', '♛', '鄉',
+  '』', '】', 'ᵍᵒᵈ', '༻', '༒', '♚', 'ツ', '爪', '༿',
+  '₣', '☠︎', '⚔︎', '❖', '✦', '☬'
 ];
 
 const fontMaps = {
-  smallCaps: { a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ', l: 'ʟ', m: 'ᴍ', n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ', s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ', w: 'ᴡ', x: '🇽', y: 'ʏ', z: 'ᴢ' },
+  smallCaps: { a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ', l: 'ʟ', m: 'ᴍ', n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ', s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ', w: 'ᴡ', x: 'x', y: 'ʏ', z: 'ᴢ' },
   gothic: { a: '𝖆', b: '𝖇', c: '𝖈', d: '𝖉', e: '𝖊', f: '𝖋', g: '𝖌', h: '𝖍', i: '𝖎', j: '𝖏', k: '𝖐', l: '𝖑', m: '𝖒', n: '𝖓', o: '𝖔', p: '𝖕', q: '𝖖', r: '𝖗', s: '𝖘', t: '𝖙', u: '𝖚', v: '𝖛', w: '𝖜', x: '𝖝', y: '𝖞', z: '𝖟' },
   cursive: { a: '𝓪', b: '𝓫', c: '𝓬', d: '𝓭', e: '𝓮', f: '𝓯', g: '𝓰', h: '𝓱', i: '𝓲', j: '𝓳', k: '𝓴', l: '𝓵', m: '𝓶', n: '𝓷', o: '𝓸', p: '𝓹', q: '𝓺', r: '𝓻', s: '𝓼', t: '𝓽', u: '𝓾', v: '𝓿', w: '𝔀', x: '𝔁', y: '𝔂', z: '𝔃' },
   boldSans: { a: '𝗮', b: '𝗯', c: '𝗰', d: '𝗱', e: '𝗲', f: '𝗳', g: '𝗴', h: '𝗵', i: '𝗶', j: '𝗷', k: '𝗸', l: '𝗹', m: '𝗺', n: '𝗻', o: '𝗼', p: '𝗽', q: '𝗾', r: '𝗿', s: '𝘀', t: '𝘁', u: '𝘂', v: '𝘃', w: '𝘄', x: '𝘅', y: '𝘆', z: '𝘇' },
-  circle: { a: 'ⓐ', b: 'ⓑ', c: 'ⓒ', d: 'ⓓ', e: 'ⓔ', f: 'ⓕ', g: 'ⓖ', h: 'ⓗ', i: 'ⓘ', j: 'ⓙ', k: 'ⓚ', l: 'ⓛ', m: 'ⓜ', n: 'ⓝ', o: 'ⓞ', p: 'ⓟ', q: 'ⓠ', r: 'ⓡ', s: 'ⓢ', t: 'ⓣ', u: 'ⓤ', v: 'ⓥ', w: 'ⓦ', x: 'ⓧ', y: 'ⓨ', z: 'ⓩ' },
-  superscript: { a: 'ᵃ', b: 'ᵇ', c: 'ᶜ', d: 'ᵈ', e: 'ᵉ', f: 'ᶠ', g: 'ᵍ', h: 'ʰ', i: 'ⁱ', j: 'ʲ', k: 'ᵏ', l: 'ˡ', m: 'ᵐ', n: 'ⁿ', o: 'ᵒ', p: 'ᵖ', q: '۹', r: 'ʳ', s: 'ˢ', t: 'ᵗ', u: 'ᵘ', v: 'ᵛ', w: 'ʷ', x: 'ˣ', y: 'ʸ', z: 'ᶻ' }
+  monospace: { a: '𝚊', b: '𝚋', c: '𝚌', d: '𝚍', e: '𝚎', f: '𝚏', g: '𝚐', h: '𝚑', i: '𝚒', j: '𝚓', k: '𝚔', l: '𝚕', m: '𝚖', n: '𝚗', o: '𝚘', p: '𝚙', q: '𝚚', r: '𝚛', s: '𝚜', t: '𝚝', u: '𝚞', v: '𝚟', w: '𝚠', x: '𝚡', y: '𝚢', z: '𝚣' },
+  circle: { a: 'ⓐ', b: 'ⓑ', c: 'ⓒ', d: 'ⓓ', e: 'ⓔ', f: 'ⓕ', g: 'ⓖ', h: 'ⓗ', i: 'ⓘ', j: 'ⓙ', k: 'ⓚ', l: 'ⓛ', m: 'ⓜ', n: 'ⓝ', o: 'ⓞ', p: 'ⓟ', q: 'ⓠ', r: 'ⓡ', s: 'ⓢ', t: 'ⓣ', u: 'ⓤ', v: 'ⓥ', w: 'ⓦ', x: 'ⓧ', y: 'ⓨ', z: 'ⓩ' }
 };
 
 function transformText(text, map) {
   return text.toLowerCase().split('').map(char => map[char] || char).join('');
 }
 
-// Poora massive pool generate karke dega
 export function generateAllPool(baseName) {
   const pool = new Set();
 
-  // Symbols combinations
-  for (let i = 0; i < 40; i++) {
-    const l = leftSymbols[Math.floor(Math.random() * leftSymbols.length)];
-    const r = rightSymbols[Math.floor(Math.random() * rightSymbols.length)];
-    const midStyles = [baseName, baseName.toUpperCase(), transformText(baseName, fontMaps.smallCaps)];
-    const mid = midStyles[Math.floor(Math.random() * midStyles.length)];
-    pool.add(`${l} ${mid} ${r}`);
-  }
-
-  // Fonts combinations
+  // 1. Stylized Font + Elite Frame Combinations
   Object.values(fontMaps).forEach(map => {
     const styled = transformText(baseName, map);
     pool.add(`亗 ${styled} 亗`);
+    pool.add(`꧁༺ ${styled} ༻꧂`);
+    pool.add(`『 ${styled} 』`);
+    pool.add(`༒︎ ${styled} ༒︎`);
     pool.add(`⚡ ${styled} ⚡`);
     pool.add(`★ ${styled} ★`);
-    pool.add(`༒︎ ${styled} ༒︎`);
-    pool.add(`🔥 ${styled} 🔥`);
-    pool.add(`『 ${styled} 』`);
+    pool.add(`Ⓥ ${styled}`);
+    pool.add(`${styled} ᵀᴹ`);
   });
+
+  // 2. Randomized Pro Symbol Combinations
+  for (let i = 0; i < 45; i++) {
+    const l = leftSymbols[Math.floor(Math.random() * leftSymbols.length)];
+    const r = rightSymbols[Math.floor(Math.random() * rightSymbols.length)];
+    const variants = [
+      baseName,
+      baseName.toUpperCase(),
+      transformText(baseName, fontMaps.smallCaps),
+      transformText(baseName, fontMaps.boldSans)
+    ];
+    const mid = variants[Math.floor(Math.random() * variants.length)];
+    pool.add(`${l} ${mid} ${r}`);
+  }
 
   return Array.from(pool);
 }
