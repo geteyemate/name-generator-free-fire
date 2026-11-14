@@ -1,31 +1,50 @@
-import { generateAllPool } from './nameGenerator.js';
+import { generateAllPool, INVISIBLE_SPACE, quickSymbols } from './nameGenerator.js';
 
+// --- 1. TOOLBAR NAVIGATION ---
+const toolTabs = document.querySelectorAll('.tool-tab');
+const toolPanels = document.querySelectorAll('.tool-panel');
+
+toolTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    toolTabs.forEach(t => t.classList.remove('active'));
+    toolPanels.forEach(p => p.classList.add('hidden'));
+
+    tab.classList.add('active');
+    const targetId = tab.getAttribute('data-target');
+    document.getElementById(targetId).classList.remove('hidden');
+  });
+});
+
+// --- 2. NAME GENERATOR (10 PER BATCH, REPLACE ON REFRESH) ---
 const nameInput = document.getElementById('name-input');
+const quickSpaceBtn = document.getElementById('quick-space-btn');
 const generateBtn = document.getElementById('generate-btn');
 const resultsSection = document.getElementById('results-section');
-const loadMoreBtn = document.getElementById('load-more-btn');
+const refreshBtn = document.getElementById('refresh-btn');
 
 let currentPool = [];
 let currentIndex = 0;
-const BATCH_SIZE = 10; // Ek baar me sirf 10 names
+const BATCH_SIZE = 10;
+
+quickSpaceBtn.addEventListener('click', () => {
+  nameInput.value += INVISIBLE_SPACE;
+  nameInput.focus();
+});
 
 function renderBatch(isNewSearch = false) {
   if (isNewSearch) {
     const baseName = nameInput.value.trim();
     if (!baseName) {
-      alert('Pehle apna naam toh daal bhai! 😅');
+      nameInput.focus();
       return;
     }
     currentPool = generateAllPool(baseName);
     currentIndex = 0;
-    resultsSection.innerHTML = ''; // Nayi search par clear karo
     resultsSection.classList.remove('hidden');
-  } else {
-    // Agar user "Generate New Styles" dabaye, toh purane wale hata kar agle 10 dikhao
-    resultsSection.innerHTML = ''; 
   }
 
-  // Agar pool khatam ho jaye toh wapas shuru se le lo taaki infinite loop chale
+  resultsSection.innerHTML = '';
+
   if (currentIndex >= currentPool.length) {
     currentIndex = 0;
   }
@@ -34,36 +53,92 @@ function renderBatch(isNewSearch = false) {
 
   nextBatch.forEach(name => {
     const card = document.createElement('div');
-    card.className = 'result-card'; // CSS class use ki hai jo tune di thi
-    card.innerHTML = `
-      <span class="name-text select-all">${name}</span>
-      <button class="copy-btn" onclick="copyName('${name.replace(/'/g, "\\'")}', this)">Copy</button>
-    `;
+    card.className = 'result-card';
+
+    const span = document.createElement('span');
+    span.className = 'name-text';
+    span.textContent = name;
+
+    const btn = document.createElement('button');
+    btn.className = 'copy-pill';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', () => copyWithFeedback(name, btn));
+
+    card.appendChild(span);
+    card.appendChild(btn);
     resultsSection.appendChild(card);
   });
 
   currentIndex += BATCH_SIZE;
-
-  // Button hamesha visible rahega taaki user jab chahe naye 10 names generate kar sake
-  loadMoreBtn.innerText = "Generate New Styles ⚡";
-  loadMoreBtn.classList.remove('hidden');
+  refreshBtn.classList.remove('hidden');
 }
-
-window.copyName = function(text, btn) {
-  navigator.clipboard.writeText(text).then(() => {
-    const originalText = btn.innerText;
-    btn.innerText = 'Copied! ✅';
-    btn.classList.add('copied');
-    
-    setTimeout(() => {
-      btn.innerText = originalText;
-      btn.classList.remove('copied');
-    }, 1500);
-  });
-};
 
 generateBtn.addEventListener('click', () => renderBatch(true));
 nameInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') renderBatch(true);
 });
-loadMoreBtn.addEventListener('click', () => renderBatch(false));
+refreshBtn.addEventListener('click', () => renderBatch(false));
+
+// --- 3. BIO & INVISIBLE SPACE TOOL ---
+const copyInvisibleBtn = document.getElementById('copy-invisible-btn');
+const bioInput = document.getElementById('bio-input');
+const bioOutput = document.getElementById('bio-output');
+const copyBioBtn = document.getElementById('copy-bio-btn');
+const colorChips = document.querySelectorAll('.color-chip');
+
+let selectedColorCode = '[FF0000]';
+
+copyInvisibleBtn.addEventListener('click', () => {
+  copyWithFeedback(INVISIBLE_SPACE, copyInvisibleBtn, 'Copied!');
+});
+
+function updateBioPreview() {
+  const text = bioInput.value.trim() || 'Headshot King • India';
+  bioOutput.textContent = `${selectedColorCode} ${text}`;
+}
+
+colorChips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    colorChips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    selectedColorCode = chip.getAttribute('data-code');
+    updateBioPreview();
+  });
+});
+
+bioInput.addEventListener('input', updateBioPreview);
+copyBioBtn.addEventListener('click', () => {
+  copyWithFeedback(bioOutput.textContent, copyBioBtn);
+});
+
+// --- 4. QUICK SYMBOL BOARD ---
+const symbolGrid = document.getElementById('symbol-grid');
+const symbolToast = document.getElementById('symbol-toast');
+
+quickSymbols.forEach(sym => {
+  const tile = document.createElement('button');
+  tile.className = 'symbol-tile';
+  tile.textContent = sym;
+  tile.addEventListener('click', () => {
+    navigator.clipboard.writeText(sym).then(() => {
+      symbolToast.style.opacity = '1';
+      setTimeout(() => {
+        symbolToast.style.opacity = '0';
+      }, 1200);
+    });
+  });
+  symbolGrid.appendChild(tile);
+});
+
+// --- SHARED COPY HELPER ---
+function copyWithFeedback(text, btn, successLabel = 'Copied') {
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.textContent;
+    btn.textContent = successLabel;
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 1400);
+  });
+}
