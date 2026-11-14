@@ -1,45 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FF Name Style - Minimal Name Generator</title>
+  <title>FF Studio — Pro Gaming Name & Bio Generator</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-white text-gray-950 min-h-screen flex flex-col justify-between items-center p-4 font-['Plus_Jakarta_Sans']">
+<body class="bg-[#070709] text-zinc-100 min-h-screen flex flex-col justify-between items-center px-4 py-6 selection:bg-white selection:text-black">
 
-  <header class="w-full max-w-lg text-center py-6 sm:py-8">
-    <div class="inline-flex items-center space-x-2 bg-gray-950 text-white text-[11px] font-bold tracking-widest px-3 py-1.5 rounded-full uppercase mb-3.5 shadow-sm">
-      <span>100% Free • 10 Names Per Page</span>
-    </div>
-    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tighter text-gray-950">FF Name Style</h1>
-    <p class="text-sm text-gray-500 font-medium mt-1.5">Enter your name, copy, and rule the battlefield.</p>
-  </header>
+  <!-- Ambient Top Glow (Subtle Runway/Leonardo vibe) -->
+  <div class="ambient-glow"></div>
 
-  <main class="w-full max-w-lg bg-white rounded-3xl p-6 sm:p-7 shadow-xl shadow-gray-100/70 border border-gray-100 space-y-6">
-    <div>
-      <label for="name-input" class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2.5">Your Nickname</label>
-      <input type="text" id="name-input" placeholder="e.g. Vinjex or Killer" class="w-full bg-gray-50 border border-gray-200 text-gray-950 placeholder-gray-400 rounded-xl px-5 py-3.5 text-base focus:outline-none focus:border-gray-950 focus:bg-white transition">
-    </div>
+  <div class="w-full max-w-xl z-10 space-y-6">
     
-    <button id="generate-btn" class="w-full bg-gray-950 hover:bg-gray-800 text-white font-semibold py-3.5 px-6 rounded-xl transition active:scale-95 shadow-lg shadow-gray-950/10">
-      Generate Stylish Names 🔥
-    </button>
+    <!-- Minimal Studio Header -->
+    <header class="text-center space-y-2 pt-2">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 text-[11px] font-medium text-zinc-400 tracking-wide">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        FF CREATOR STUDIO v2.0
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white font-['Plus_Jakarta_Sans']">
+        FF Name Studio
+      </h1>
+      <p class="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto">
+        Craft ultra-rare nicknames, invisible spaces, and colored profile bios.
+      </p>
+    </header>
 
-    <section id="results-section" class="hidden pt-6 border-t border-gray-100 space-y-3">
+    <!-- AI-Style Segmented Tool Bar (Easy to expand later) -->
+    <nav class="studio-toolbar p-1.5 rounded-2xl flex items-center gap-1 overflow-x-auto no-scrollbar" id="tool-bar">
+      <button class="tool-tab active flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all whitespace-nowrap" data-target="tool-names">
+        ✦ Name Generator
+      </button>
+      <button class="tool-tab flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all whitespace-nowrap" data-target="tool-bio">
+        ◈ Bio & Space
+      </button>
+      <button class="tool-tab flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all whitespace-nowrap" data-target="tool-symbols">
+        ❖ Quick Symbols
+      </button>
+    </nav>
+
+    <!-- TOOL 1: NAME GENERATOR -->
+    <main id="tool-names" class="tool-panel studio-card rounded-3xl p-5 sm:p-6 space-y-5">
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <label for="name-input" class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">Base Nickname</label>
+          <span class="text-[11px] text-zinc-500">10 Styles / Batch</span>
+        </div>
+        <div class="relative flex items-center">
+          <input type="text" id="name-input" placeholder="Enter name (e.g. Vinjex)" class="studio-input w-full rounded-xl pl-4 pr-24 py-3.5 text-sm sm:text-base text-white placeholder-zinc-600 focus:outline-none">
+          <button id="quick-space-btn" title="Insert Invisible Space" class="absolute right-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-[11px] font-medium px-2.5 py-1.5 rounded-lg border border-zinc-700/80 transition">
+            + Space
+          </button>
+        </div>
+      </div>
+
+      <button id="generate-btn" class="studio-btn-primary w-full py-3.5 px-5 rounded-xl text-sm font-bold tracking-tight transition active:scale-[0.99]">
+        Generate Styles
+      </button>
+
+      <!-- Results List (Max 10) -->
+      <section id="results-section" class="hidden pt-4 border-t border-zinc-800/80 space-y-2.5">
+      </section>
+
+      <!-- Refresh Batch Button -->
+      <button id="refresh-btn" class="hidden w-full py-3 px-4 rounded-xl text-xs font-semibold text-zinc-300 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 transition active:scale-[0.99]">
+        ↻ Generate Next 10 Styles
+      </button>
+    </main>
+
+    <!-- TOOL 2: BIO & INVISIBLE SPACE -->
+    <section id="tool-bio" class="tool-panel hidden studio-card rounded-3xl p-5 sm:p-6 space-y-5">
+      <!-- Invisible Space Card -->
+      <div class="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800/90 flex items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-semibold text-white">Invisible Space Character</h3>
+          <p class="text-xs text-zinc-400 mt-0.5">Copy blank Unicode space for clean gaps in FF names.</p>
+        </div>
+        <button id="copy-invisible-btn" class="copy-pill shrink-0">Copy Blank</button>
+      </div>
+
+      <!-- Colored Bio Generator -->
+      <div class="space-y-3 pt-2 border-t border-zinc-800/80">
+        <label class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 block">Colored Profile Bio</label>
+        <input type="text" id="bio-input" placeholder="e.g. Headshot King • India" class="studio-input w-full rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none">
+        
+        <div class="flex items-center gap-2 flex-wrap" id="color-picker">
+          <button type="button" data-code="[FF0000]" class="color-chip active" style="--chip:#ef4444">Red</button>
+          <button type="button" data-code="[FFD700]" class="color-chip" style="--chip:#eab308">Gold</button>
+          <button type="button" data-code="[00FF00]" class="color-chip" style="--chip:#22c55e">Neon</button>
+          <button type="button" data-code="[00FFFF]" class="color-chip" style="--chip:#06b6d4">Cyan</button>
+          <button type="button" data-code="[FF00FF]" class="color-chip" style="--chip:#d946ef">Pink</button>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800/90 flex items-center justify-between gap-3">
+          <code id="bio-output" class="text-xs text-zinc-300 truncate">[FF0000] Headshot King • India</code>
+          <button id="copy-bio-btn" class="copy-pill shrink-0">Copy</button>
+        </div>
+      </div>
     </section>
 
-    <button id="load-more-btn" class="hidden w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl text-xs transition">
-      Load More Unique Styles ⚡
-    </button>
-  </main>
+    <!-- TOOL 3: QUICK SYMBOL BOARD -->
+    <section id="tool-symbols" class="tool-panel hidden studio-card rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Tap Any Symbol to Copy</h3>
+        <span id="symbol-toast" class="text-[11px] text-emerald-400 opacity-0 transition-opacity">Copied!</span>
+      </div>
+      <div id="symbol-grid" class="grid grid-cols-5 sm:grid-cols-6 gap-2">
+        <!-- Populated dynamically from nameGenerator.js -->
+      </div>
+    </section>
 
-  <footer class="w-full max-w-lg text-center py-6">
-    <p class="text-xs text-gray-400 font-medium">Built with AI • All Unicode Characters Supported</p>
+  </div>
+
+  <!-- Minimal Studio Footer -->
+  <footer class="w-full max-w-xl text-center pt-8 pb-2 z-10">
+    <p class="text-[11px] text-zinc-600 font-medium">FF Name Studio • Ultra-Minimal Dark UI</p>
   </footer>
 
   <script src="app.js" type="module"></script>
