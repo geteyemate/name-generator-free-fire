@@ -1,118 +1,193 @@
-/* Prevent double-tap zoom across the entire page */
+/* Global Reset & Double-Tap Zoom Prevention */
 * {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Body-wide subtle refinements */
 body {
-  background-color: #fafafa; /* Very light grey, almost white */
+  font-family: 'Inter', sans-serif;
+  background-color: #070709;
+  overflow-x: hidden;
 }
 
-/* Specific focus effect for the input field */
-input:focus {
-  border-color: #000;
-  box-shadow: 0 0 0 1px #000;
+/* Hide scrollbar for horizontal toolbar on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Custom class for generating results through JavaScript */
+/* Subtle Ambient Top Light (Runway / Leonardo Aesthetic) */
+.ambient-glow {
+  position: fixed;
+  top: -140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(7, 7, 9, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Segmented Toolbar */
+.studio-toolbar {
+  background: rgba(18, 18, 22, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.tool-tab {
+  color: #71717a;
+}
+
+.tool-tab:hover {
+  color: #e4e4e7;
+}
+
+.tool-tab.active {
+  background: #222228;
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Main Glassmorphic Surface Card */
+.studio-card {
+  background: linear-gradient(180deg, rgba(20, 20, 25, 0.9) 0%, rgba(13, 13, 17, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.75);
+}
+
+/* Input Styling */
+.studio-input {
+  background-color: #0d0d11;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.studio-input:focus {
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+/* High-Contrast Monochrome Primary Button */
+.studio-btn-primary {
+  background: #ffffff;
+  color: #09090b;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.12);
+}
+
+.studio-btn-primary:hover {
+  background: #e4e4e7;
+}
+
+/* Result Item Card */
 .result-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff;
-  border: 1px solid #e5e7eb; /* tailwind gray-200 */
-  border-radius: 12px;
-  padding: 16px;
-  transition: border-color 0.2s;
+  gap: 12px;
+  background-color: #0e0e12;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 13px 16px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .result-card:hover {
-  border-color: #d1d5db; /* tailwind gray-300 */
+  background-color: #14141a;
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 .result-card .name-text {
-  font-size: 1.125rem; /* 18px */
-  font-weight: 700;
-  letter-spacing: 0.025em; /* wide tracking */
-  color: #111; /* gray-950 */
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #f4f4f5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.result-card .copy-btn {
-  background-color: #f3f4f6; /* gray-100 */
-  color: #6b7280; /* gray-500 */
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.75rem; /* 12px */
+/* Copy Pill Button */
+.copy-pill {
+  background-color: #1c1c22;
+  color: #d4d4d8;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 13px;
+  border-radius: 9px;
+  font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.18s ease;
+  white-space: nowrap;
 }
 
-.result-card .copy-btn:hover {
-  background-color: #111; /* black on hover */
-  color: #fff; /* white on hover */
+.copy-pill:hover {
+  background-color: #ffffff;
+  color: #09090b;
+  border-color: #ffffff;
 }
 
-.result-card .copy-btn.copied {
-  background-color: #10b981; /* tailwind green-500 */
-  color: #fff;
-}
-/* Prevent double-tap zoom across the entire page */
-* {
-  touch-action: manipulation;
+.copy-pill.copied {
+  background-color: #10b981;
+  color: #052e16;
+  border-color: #10b981;
 }
 
-/* Body-wide subtle refinements */
-body {
-  background-color: #fafafa; /* Very light grey, almost white */
+/* Bio Color Chips */
+.color-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #a1a1aa;
+  background: #121216;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-/* Specific focus effect for the input field */
-input:focus {
-  border-color: #000;
-  box-shadow: 0 0 0 1px #000;
+.color-chip::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--chip);
 }
 
-/* Custom class for generating results through JavaScript */
-.result-card {
+.color-chip.active {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: #1e1e24;
+}
+
+/* Symbol Grid Tile */
+.symbol-tile {
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: #fff;
-  border: 1px solid #e5e7eb; /* tailwind gray-200 */
+  justify-content: center;
+  background: #0e0e12;
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
-  padding: 16px;
-  transition: border-color 0.2s;
-}
-
-.result-card:hover {
-  border-color: #d1d5db; /* tailwind gray-300 */
-}
-
-.result-card .name-text {
-  font-size: 1.125rem; /* 18px */
-  font-weight: 700;
-  letter-spacing: 0.025em; /* wide tracking */
-  color: #111; /* gray-950 */
-}
-
-.result-card .copy-btn {
-  background-color: #f3f4f6; /* gray-100 */
-  color: #6b7280; /* gray-500 */
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.75rem; /* 12px */
-  font-weight: 600;
+  font-size: 1.05rem;
+  color: #e4e4e7;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
 }
 
-.result-card .copy-btn:hover {
-  background-color: #111; /* black on hover */
-  color: #fff; /* white on hover */
+.symbol-tile:hover {
+  background: #1c1c22;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
 }
 
-.result-card .copy-btn.copied {
-  background-color: #10b981; /* tailwind green-500 */
-  color: #fff;
+.symbol-tile:active {
+  transform: scale(0.94);
 }
